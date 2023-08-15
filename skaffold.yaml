@@ -2,7 +2,7 @@ apiVersion: skaffold/v4beta6
 kind: Config
 build:
   artifacts:
-    - image: menelik7/auth
+    - image: us.gcr.io/ticketing-dev-395718/auth
       context: auth
       sync:
         manual:
@@ -10,8 +10,10 @@ build:
             dest: .
       docker:
         dockerfile: Dockerfile
-  local:
-    push: false
+  # local:
+  #   push: false
+  googleCloudBuild:
+    projectId: ticketing-dev-395718
 manifests:
   rawYaml:
     - ./infra/k8s/*
