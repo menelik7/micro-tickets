@@ -10,7 +10,7 @@ spec:
     - host: ticketing.dev
       http:
         paths:
-          - pathType: Prefix
+          - pathType: ImplementationSpecific
             path: "/api/users/?(.*)"
             backend:
               service:
