@@ -11,6 +11,10 @@ const router = express.Router();
 router.post(
 	"/api/users/signup",
 	[
+		body("username")
+			.trim()
+			.isLength({ min: 3, max: 12 })
+			.withMessage("Username must be between 3 and 12 characters long."),
 		body("email").isEmail().withMessage("Email must be valid"),
 		body("password")
 			.trim()
@@ -19,7 +23,7 @@ router.post(
 	],
 	validateRequest,
 	async (req: Request, res: Response) => {
-		const { email, password } = req.body;
+		const { username, email, password } = req.body;
 
 		const existingUser = await User.findOne({ email });
 
@@ -27,13 +31,14 @@ router.post(
 			throw new BadRequestError("Email in use");
 		}
 
-		const user = User.build({ email, password });
+		const user = User.build({ username, email, password });
 		await user.save();
 
 		// Generate json web token
 		const userJwt = jwt.sign(
 			{
 				id: user.id,
+				username: user.username,
 				email: user.email,
 			},
 			process.env.JWT_KEY!

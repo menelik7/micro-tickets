@@ -10,6 +10,7 @@ declare global {
 let mongo: any;
 
 beforeAll(async () => {
+	// Without the following, the tests will fail
 	// process.env.JWT_KEY = "tobefilledout"
 
 	mongo = await MongoMemoryServer.create();
