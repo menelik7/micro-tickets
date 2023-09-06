@@ -10,7 +10,7 @@ let mongo: any;
 
 beforeAll(async () => {
 	// Without the following, the tests will fail
-	process.env.JWT_KEY = "asdf";
+	// process.env.JWT_KEY = "tobefilledout"
 
 	mongo = await MongoMemoryServer.create();
 	const mongoUri = mongo.getUri();
@@ -43,7 +43,7 @@ global.signup = () => {
 	// Create a JWT
 	const token = jwt.sign(payload, process.env.JWT_KEY!);
 
-	// Build a session object { jat: MY_JWT}
+	// Build a session object { jwt: MY_JWT}
 	const session = { jwt: token };
 
 	// Turn that into a session
